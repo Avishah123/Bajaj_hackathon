@@ -7,7 +7,7 @@ from django.views import View
 from .models import LineItem, Invoice
 from .forms import LineItemFormset, InvoiceForm, Product_update_form, AuthorBooksFormset, OrderForm
 from django.views import generic
-import pdfkit
+
 from django.urls import reverse_lazy
 from django.views.generic import (
     TemplateView, ListView, CreateView, DetailView, FormView)
@@ -15,6 +15,47 @@ from django.views.generic import (
 from django.views.generic.detail import SingleObjectMixin
 from django.http import HttpResponseRedirect
 from django.forms import inlineformset_factory
+from .forms import UserImageForm,HotelForm
+
+
+
+def hotel_image_view(request):
+  
+    if request.method == 'POST':
+        form = HotelForm(request.POST, request.FILES)
+  
+        if form.is_valid():
+            
+            form.save()
+            return redirect('success')
+    else:
+        form = HotelForm()
+    return render(request, 'image_new.html', {'form' : form})
+  
+  
+def success(request):
+    return HttpResponse('successfully uploaded')
+
+
+
+def image_request(request):  
+    if request.method == 'POST':  
+        form = UserImageForm(request.POST, request.FILES)  
+        if form.is_valid():  
+            form.save()  
+  
+            # Getting the current instance object to display in the template  
+            img_object = form.instance  
+              
+            return render(request, 'image_form.html', {'form': form, 'img_obj': img_object})  
+    else:  
+        form = UserImageForm()  
+  
+    return render(request, 'image_form.html', {'form': form})  
+
+
+
+
 
 # Create your views here.
 def home(request):         
@@ -38,10 +79,14 @@ def createInvoice(request):
         if form.is_valid():
             invoice = Invoice.objects.create(customer=form.data["customer"],
                     customer_email=form.data["customer_email"],
+                    provider_name= form.data["customer_email"],
+                    
+                    provider_pin= form.data["provider_pin"],
+                    provider_city= form.data["provider_city"],
                     billing_address=form.data["billing_address"],
                     date=form.data["date"],
-                    due_date=form.data["due_date"],
-                    message=form.data["message"],
+                    
+                    
                     )
             # invoice.save()
 
@@ -76,4 +121,5 @@ def createInvoice(request):
         "form": form,
         # "customer" : Invoice.objects.values('customer'),
     }
-    return render(request, 'invoice/invoice-create.html', context)
+    return render(request, 'invoice-create.html', context)
+

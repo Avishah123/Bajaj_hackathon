@@ -2,8 +2,29 @@ from django import forms
 from django.forms import formset_factory
 from .models import *
 from django.forms.models import inlineformset_factory
+from django.db import transaction
+
+class HotelForm(forms.ModelForm):
+  
+    class Meta:
+        model = Hotel
+        fields = ['name', 'hotel_Main_Img']
+        
+    @transaction.atomic  
+    def save(self):       
+        print('inside save function of ')
+        name = self.cleaned_data.get('name')
+        print(name)        
+        attendance = Hotel(name=self.cleaned_data.get('name'),hotel_Main_Img=self.cleaned_data.get('hotel_Main_Img'))
+        attendance.save()
 
 
+class UserImageForm(forms.ModelForm):  
+    class meta:  
+        # To specify the model to be used to create form  
+        models = UploadImage  
+        # It includes all the fields of model  
+        fields = '__all__'  
 
 
 
@@ -15,7 +36,7 @@ class InvoiceForm(forms.Form):
         
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Customer/Company1 Name',
+            'placeholder': 'Customer ID',
             'rows':1    
         }
         
@@ -37,14 +58,42 @@ class InvoiceForm(forms.Form):
             'rows':1
         })
     )
-    message = forms.CharField(
-        label='Message/Note',
+    provider_name = forms.CharField(
+        label='Name',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'message',
+            'placeholder': 'Name',
             'rows':1
         })
     )
+    
+    provider_pin = forms.CharField(
+        label='Pincode',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Pincode',
+            'rows':1
+        })
+    )
+    
+    provider_city = forms.CharField(
+        label='city',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'city',
+            'rows':1
+        })
+    )
+    
+    date = forms.CharField(
+        label='date',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'date',
+            'rows':1
+        })
+    )
+    
     
    
 

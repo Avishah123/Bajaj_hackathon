@@ -1,4 +1,4 @@
-{% extends "invoice/base.html" %}
+{% extends "base.html" %}
 
 {% load bulma_tags %}
 
@@ -19,23 +19,30 @@
                         </div>
 
                         
-                        <div class="column is-one-third">
+                        <div class="column ">
                             {{form.customer_email|bulma}}
                         </div>
-                        <div class="column is-one-third">
-                            {{form.message|bulma}}
+
+                        <div class="column ">
+                            {{form.provider_city|bulma}}
+                        </div>
+
+                        <div class="column ">
+                            {{form.provider_pin|bulma}}
+                        </div>
+
+                        <div class="column ">
+                            {{form.provider_name|bulma}}
                         </div>
                     </div>
                     <div class="columns is-centered">
-                        <div class="column is-one-third">
+                        <div class="column ">
                             {{form.billing_address|bulma}}
                         </div>
                         <div class="column is-one-third">
                             date: <input class="input" type="date" name="date">
                         </div>
-                        <div class="column is-one-third">
-                            due-date: <input class="input" type="date" name="due_date">
-                        </div>
+                        
                     </div>
 
 
