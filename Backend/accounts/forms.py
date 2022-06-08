@@ -15,6 +15,8 @@ class HotelForm(forms.ModelForm):
         print('inside save function of ')
         name = self.cleaned_data.get('name')
         print(name)        
+        hotel_Main_Img=self.cleaned_data.get('hotel_Main_Img')
+        print(hotel_Main_Img)
         attendance = Hotel(name=self.cleaned_data.get('name'),hotel_Main_Img=self.cleaned_data.get('hotel_Main_Img'))
         attendance.save()
 
