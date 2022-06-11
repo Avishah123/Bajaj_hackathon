@@ -1,14 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hotel_image</title>
-</head>
-<body>
-    <form method = "post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+
+{% load bulma_tags %}
+<div class="columns is-centered has-text-centered">
+    <div class="column is-half">
+        <div class="card has-background-white-ter">
+            <h1 class="title is-3"></h1>
+        </div>
+    </div>
+</div>
+<form  method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="card">
+        <header class="card-header">
+            
+            <p class="card-header-title">
+                Create Using Camera &nbsp;<button class="button is-rounded is-info">
+                    <a href="{% url 'image_upload' %}" class="has-text-white">Scan Invoice</a></button>
+            </p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+
+                <div class="columns is-centered">
+                    
+                    <div class="column  ">
+                        {{form.invoice_image}}
+                    </div>
+
+                    <div class="column  ">
+                        {{form.customer}}
+                    </div>
+
+                    {% comment %} <div class="column "> 
+                        {{form.provider_city|bulma}}
+                    </div>
+
+                    <div class="column ">
+                        {{form.provider_pin|bulma}}
+                    </div>
+
+                    <div class="column ">
+                        {{form.provider_name|bulma}}
+                    </div> {% endcomment %}
+                </div>
+                
+                <a href="/test" class="button is-rounded is-info">
+                    Upload</a>
+
+            </div>
+        </div>
+    </div><br /><br /><br />
+    
+    </div>
+</form>
+
+{% endblock content %}
